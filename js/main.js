@@ -1,5 +1,5 @@
 
-confirm("Чи бажаєте почати гру?") ? Game(1) : GameOver();
+confirm("Чи бажаєте почати гру?") ? Game(0) : GameOver();
 
 function Game(gameTry){
 
@@ -16,6 +16,7 @@ function Game(gameTry){
     }
 
     maxNum = maxNum * gameTry;
+    
     console.log('countTry ' + countTry, 'maxNum ' + maxNum, 'gameTry ' + gameTry, 'num ' + num);
 
     for(var countTry = 0; countTry < maxCountTry; countTry++){
