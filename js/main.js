@@ -1,50 +1,45 @@
+confirm("Чи бажаєте почати гру?") ? Game(0, 0) : GameOver();
 
-confirm("Чи бажаєте почати гру?") ? Game(1) : GameOver();
-
-function Game(gameTry){
-
-    var yourMoney = [10, 5, 2];
-    var countTry = 1;
+function Game(gameTry, prevWin){
     var maxCountTry = 3;
-    var maxNum = 5 * gameTry;
-    var num = parseInt(Math.random()*maxNum, 10);
-
-    console.log('gameTry ' + gameTry);
-
+    var yourMoney = [10, 5, 2];
     for (var i = 0; i < yourMoney.length; i++) {
-        yourMoney[i] = yourMoney[i] * 3 * gameTry;
+        yourMoney[i] = yourMoney[i] * Math.pow(3, gameTry);
     }
 
-    maxNum = maxNum * gameTry;
+    var maxNum = 5;
+    maxNum = maxNum * Math.pow(2, gameTry);
+    var ourNum = parseInt(Math.random()*maxNum, 10);
 
-    console.log('countTry ' + countTry, 'maxNum ' + maxNum, 'gameTry ' + gameTry, 'num ' + num);
+    console.log('загадане число: ' + ourNum);
 
-    for(var countTry = 0; countTry < maxCountTry; countTry++){
-
-        console.log('yourMoney ' + yourMoney[countTry] + '$', 'countTry ' + countTry);
+    for(var countTry = 1; countTry <= maxCountTry; countTry++) {
 
         var userNum = prompt("Вгадай число від 0 до " + maxNum);
-        console.log('userNum ' + userNum);
 
-        if(userNum == num){
-            console.log('win', 'gameTry' + gameTry, 'countTry' + countTry);
-          //confirm("хоче продовжити гру?") ? Game(countTry*2) : GameWin(yourMoney[i]);
+        if(userNum == ourNum){
+        	if (confirm("хоче продовжити гру?")) {        		
+        		Game(gameTry+1, yourMoney[countTry-1] + prevWin);
+                break;
+            }
+        	else {
+                console.info('Дякуємо за гру, ваш виграш становить ' + (yourMoney[countTry-1] + prevWin) + '$');
+        		break;
+        	}        		
         }
         else{
-            console.log('fail', 'countTry ' + countTry);
-            console.log('maxCountTry ' + maxCountTry);
-
-            //GameOver();
+        	if(countTry == maxCountTry){
+        		GameOver(); 
+        		break;
+        	}
+        	console.log(yourMoney[countTry] + "$ ще можеш виграти в цьому раунді, пробуй ще, в тебе " + (maxCountTry - countTry) + " спроб");
         }
+
     }
 }
-function GameWin(x){
-  console.info('Дякуємо за гру, ваш виграш становить ' + x + '$');
-}
+
 function GameOver(){
-  console.info("Сьогодні ви не виграли мільйон, а могли");
+  return console.info("Сьогодні ви не виграли мільйон, а могли");
 }
 
-//confirm();
-//
 
